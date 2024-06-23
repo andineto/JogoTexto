@@ -102,12 +102,16 @@ void mainMenu()
 	int opt;
 	while (opt != 5)
 	{
-		if (pontos <= 0)
+		if (pontos < 10 && player.class.hp <= 0)
 		{
 			system("cls");
 			printf("\nVoce chegou ao fim dos seus pontos totais, seu antigo corpo foi levado e um novo desafiante entra na arena!\n\nPREPARE-SE PARA UM NOVO JOGO!!");
 			getch();
 			newGame();
+		} else if (player.class.hp <= 0 && pontos >= 10) {
+			printf("\nQue pena, seu hp chegou a 0, você será levado a enfermaria, troque seus pontos por HP!!\n");
+			getch();
+			recuperaHp();
 		}
 		system("cls");
 		printf("\n===============MENU PRINCIPAL===============\n");
@@ -254,12 +258,19 @@ void luta(Entity inimigo)
 			pontos -= pontosApostados;
 			printf("\nVoce perdeu %d pontos\nPotuacao atual: %d", pontosApostados, pontos);
 			getch();
+			player.class.hp = 0;
 		}
 
 		// Exibe a vida restante do player
 		system("cls");
 		printf("\nVoce ainda tem %d de vida\n", player.class.hp);
 		getch();
+	}
+	if (player.class.hp <= 0)
+	{
+		printf("HP INSUFICIENTE, TROQUE SEUS PONTOS POR HP");
+		getch();
+		return;
 	}
 }
 
